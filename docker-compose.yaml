@@ -1,0 +1,41 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+    - '5432:5432'
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+
+
+  backend:
+    container_name: backend
+    image: xmuramasa/hls_test_backend:1.0.0
+    build: ./backend
+    environment:
+      - DATABASE_URL=host=postgres port=5432 user=${DB_USER} password=${DB_PASSWORD} dbname=postgres sslmode=disable
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+
+  frontend:
+    container_name: frontend
+    image: xmuramasa/hls_test_frontend:1.0.0
+    build:
+      context: ./frontend
+      dockerfile: next.dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${API_URL}
+
+volumes:
+  pgdata:

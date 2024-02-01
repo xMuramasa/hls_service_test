@@ -1,0 +1,28 @@
+package main
+
+import (
+	"example.com/backend/db"
+	"example.com/backend/routes"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+
+	db.InitDB()
+
+	server := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*", "http://localhost:3000"}
+	config.AllowCredentials = true
+	config.ExposeHeaders = []string{"Authorization"}
+	config.AddAllowHeaders("Authorization")
+
+	server.Use(cors.New(config))
+
+	routes.RegisterRoutes(server)
+
+	server.Run(":8080") // localhost
+
+}

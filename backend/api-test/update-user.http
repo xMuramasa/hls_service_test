@@ -1,0 +1,9 @@
+PUT http://localhost:8080/users/9
+content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXI4QHRlc3QuY29tIiwiZXhwIjoxNzA2NzQyNDU5LCJpZCI6OX0.Auy3Hbu8vVO1dBDdzQik7RG1H5hJ1YBpB0MuBb6oLi8
+
+{
+    "name": "John Doe",
+    "email": "john.d@email.com",
+    "password": "123456"
+}
