@@ -17,8 +17,9 @@ import {
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { changeState, voidFunc } from "../interfaces/Form";
-import User from "../interfaces/User";
+import { changeState, voidFunc, User } from "../interfaces/Interfaces";
+
+
 
 const UpdateUserForm: React.FC<{updateUser: User, setUpdateUser: changeState, updateUserData: voidFunc }> = 
 	({ updateUser, setUpdateUser, updateUserData }) => {

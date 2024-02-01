@@ -14,10 +14,11 @@ func RegisterRoutes(server *gin.Engine) {
 	authenticated := server.Group("/")
 	authenticated.Use(middlewares.Authenticate)
 
-	authenticated.GET("/videos/:id", getVideo)
 	authenticated.GET("/users", getUsers)
-
 	authenticated.PUT("/users/:id", updateUser)
+
+	authenticated.GET("/videos", getVideoList)
+	authenticated.StaticFS("/videos", http.Dir("./static/videos"))
 
 	// authenticated.POST("/events", createEvent)
 	// authenticated.PUT("/events/:id", updateEvent)

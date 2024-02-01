@@ -13,7 +13,7 @@ interface UserCard {
     Name: string;
 }
 
-const CardComponent: React.FC<{card: UserCard}> = ({ card }) => {
+const UserCardComponent: React.FC<{card: UserCard}> = ({ card }) => {
     return (
         <Card sx={{ minWidth: 120, maxHeight: 300 }}>
             <CardActionArea>
@@ -35,4 +35,4 @@ const CardComponent: React.FC<{card: UserCard}> = ({ card }) => {
     )
 }
 
-export default CardComponent;
+export default UserCardComponent;

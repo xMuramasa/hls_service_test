@@ -4,30 +4,60 @@ import React, { useState, useEffect, } from "react";
 
 import axios from "axios";
 
-import CardComponent from "./CardComponent";
+import UserCardComponent from "./UserCardComponent";
 import { Button, Grid } from "@mui/material";
 
-import User from "../interfaces/User";
+import User from "../interfaces/Interfaces";
 import CreateUserForm from "./CreateUserForm";
 import UpdateUserForm from "./UpdateUserForm";
 import LoginForm from "./LoginForm";
 
 import { getFromLocalStorage, saveToLocalStorage } from "../utils/localStorage";
-import { get } from "http";
+import Hls from "hls.js";
+
+import { isEmptyOrUndefined } from "../utils/utils";
 
 interface UserInterfaceProps {
-	backendName: string;
 }
 
 const UserInterface: React.FC<UserInterfaceProps> = () => {
 	const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+	const HlsSupported = Hls.isSupported();
 
 	const [loginJWT, setLoginJWT] = useState(getFromLocalStorage('userData'));
+
+
+	const [videoList, setVideoList] = useState([]);
+	const [activeVideo, setActiveVideo] = useState('');
 
 	const [users, setUsers] = useState<User[]>([]);
 	const [userData, setUserData] = useState({ Email: '', Name: '', Password: '', Id: -1});
 	const [newUser, setNewUser] = useState({ Email: '', Name: '', Password: '', Id: -1});
 	const [updateUser, setUpdateUser] = useState({ Id: '', Email: '', Name: '', Password: ''});
+
+	useEffect(() => {
+		if (HlsSupported && !isEmptyOrUndefined(activeVideo, 'string') ) {
+			var video: any = document.getElementById('video');
+
+			const hls = new Hls({
+				fetchSetup: function (context, initParams) {
+					// Always send cookies, even for cross-origin calls.
+					initParams.credentials = 'include';
+					initParams.headers ={
+						Authorization: loginJWT,
+					}
+					return new Request(context.url, initParams);
+				},
+			})
+
+			// bind them together
+			hls.attachMedia(video);
+			
+			hls.loadSource(`${apiUrl}/videos/${activeVideo}/segment.m3u8`);
+			// bind them together
+			hls.attachMedia(video)
+		}
+	}, [activeVideo]);
 	
 	// fetch users from backend
 	const fetchUsers = async () => {
@@ -54,74 +84,103 @@ const UserInterface: React.FC<UserInterfaceProps> = () => {
 		}
 	}
 
+	const fetchVideos = async () => {
+		try {
+			if (loginJWT !== null || loginJWT !== undefined || loginJWT !== '') {
+				const response = await axios.get(`${apiUrl}/videos`, {
+					headers: {
+						'Authorization': `${loginJWT}`,
+					},
+				})
+				setVideoList(response.data.videos);
+			}
+		} catch (error) {
+			console.log("Error While fetching Data", error);
+		}
+	}
+
 	useEffect(()=>{
 		if (loginJWT !== null) {
 			saveToLocalStorage(loginJWT, 'userData');
-			fetchUsers();
+			// fetchUsers();
 		}
 	}, [loginJWT]);
 
 	// create user
-	const createUser = async () => {
-		try {
-			const response = await axios.post(`${apiUrl}/signup`, newUser);
-			setUsers([...users, response.data.user]);
-		} catch (error) {
-			console.log("Error While Creating User", error);
-		}
-	}
+	// const createUser = async () => {
+	// 	try {
+	// 		const response = await axios.post(`${apiUrl}/signup`, newUser);
+	// 		setUsers([...users, response.data.user]);
+	// 	} catch (error) {
+	// 		console.log("Error While Creating User", error);
+	// 	}
+	// }
 
-	const updateUserData = async () => {
-		try {
-			await axios.post(`${apiUrl}/user/${updateUser.Id}`, updateUser);
-			fetchUsers();
-		} catch (error) {
-			console.log("Error While Creating User", error);
-		}
-	}
+	// const updateUserData = async () => {
+	// 	try {
+	// 		await axios.post(`${apiUrl}/user/${updateUser.Id}`, updateUser);
+	// 		fetchUsers();
+	// 	} catch (error) {
+	// 		console.log("Error While Creating User", error);
+	// 	}
+	// }
 
 	return (
-		<Grid container spacing={1} direction={'column'}
-			alignSelf={"center"} justifyItems={"center"} 
-			alignItems={"center"}
-			bgcolor={'cyan'}
-		>
-			{ loginJWT ? 
-				<>
-					<Grid item>
-						<Button color="primary" variant="contained" size="large"
-							sx={{ textTransform: 'none' }}
-							onClick={() => setLoginJWT(null)}
-							>
-							Log Out
-						</Button>
+		<div>
+		{ !isEmptyOrUndefined(loginJWT, 'string') ? 
+			<Grid container spacing={1} direction={'column'}
+				alignSelf={"center"} justifyItems={"center"} 
+				alignItems={"center"}
+			>
+					<Grid item xs={12} container justifyContent={"space-between"}>
+						<Grid item xs>
+							<Button color="primary" variant="outlined" size="large"
+								sx={{ textTransform: 'none' }}
+								onClick={() => fetchVideos()}
+								>
+								Load Video List
+							</Button>
+						</Grid>
+						<Grid item xs>
+							<Button color="error" variant="outlined" size="large"
+								sx={{ textTransform: 'none' }}
+								onClick={() => localStorage.clear()}
+								>
+								Log Out
+							</Button>
+						</Grid>						
 					</Grid>
-					<Grid item>
+					{ !isEmptyOrUndefined(videoList, 'array') ? 
+						videoList?.map((v: any) => {
+							return (
+								<Grid key={v} item xs={12} container justifyContent={"space-between"}>
+									<Button color="primary" variant="outlined" size="large"
+										sx={{ textTransform: 'none' }}
+										onClick={() => setActiveVideo(v.name)}
+										>
+										{v.name}
+									</Button>
+								</Grid>
+							)
+						}) : null
+					}
+					{/* <Grid item>
 						<CreateUserForm newUser={newUser} setNewUser={setNewUser} createUser={createUser}/>
 					</Grid>
 					<Grid item>
 						<UpdateUserForm updateUser={updateUser} setUpdateUser={setUpdateUser} updateUserData={updateUserData}/>
+					</Grid> */}
+					<Grid item>
+						<video id="video" width="720" height="360" controls />
 					</Grid>
-
-
-					<Grid item container xs={12} spacing={1} p={1}>
-
-						{ users && Object.keys(users).length !== 0 ? 
-							users.map((user) => (
-								<Grid item xs key={user.Id}>
-									<CardComponent card={user} />
-								</Grid>
-							))
-							: null
-						}
-					</Grid>
-				</>
+				</Grid>
 				:
 				<Grid item>
 					<LoginForm userData={userData} setUserData={setUserData} logIn={login}/>
 				</Grid>
 			}
-		</Grid>
+		</div>
+
 	)
 
 }

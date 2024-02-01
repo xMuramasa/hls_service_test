@@ -1722,6 +1722,11 @@ hasown@^2.0.0:
   dependencies:
     function-bind "^1.1.2"
 
+hls.js@1.5.2-0.canary.9941:
+  version "1.5.2-0.canary.9941"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.5.2-0.canary.9941.tgz#765eb15b1443f11fd05fb737c61ffb8b0914bbe9"
+  integrity sha512-CNflt+jYDg4AUo3iLGEndw1eFwzy0rGSjTCLItAi3/TKhcEs7v5Izpw4l9A9hzIEx4vbmL0mVuMvBzI3+L0neA==
+
 hoist-non-react-statics@^3.3.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"

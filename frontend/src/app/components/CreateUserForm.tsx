@@ -20,8 +20,7 @@ import {
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { changeState, voidFunc } from "../interfaces/Form";
-import User from "../interfaces/User";
+import { changeState, voidFunc, User } from "../interfaces/Interfaces";
 
 const CreateUserForm: React.FC<{newUser: User, setNewUser: changeState, createUser: voidFunc }> = 
 	({ newUser, setNewUser, createUser }) => {

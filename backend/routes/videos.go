@@ -2,11 +2,16 @@ package routes
 
 import (
 	"net/http"
+	"os"
 	"strconv"
 
 	"example.com/backend/models"
 	"github.com/gin-gonic/gin"
 )
+
+type Video struct {
+	Name string `json:"name"`
+}
 
 func getVideo(ctx *gin.Context) {
 	eId, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
@@ -31,6 +36,33 @@ func getVideo(ctx *gin.Context) {
 		event,
 	)
 
+}
+
+func getVideoList(ctx *gin.Context) {
+	entries, err := os.ReadDir("./static/videos")
+	if err != nil {
+		ctx.JSON(
+			http.StatusInternalServerError,
+			gin.H{"message": "Could not fetch videos"},
+		)
+		return
+	}
+	var videos []Video
+
+	for _, e := range entries {
+		var video Video
+		video.Name = e.Name()
+		videos = append(videos, video)
+		// match, _ := regexp.MatchString("([a-z]+).m3u8", e.Name())
+		// if match {
+		// 	videos = append(videos, e.Name())
+		// }
+
+	}
+	ctx.JSON(
+		http.StatusOK,
+		gin.H{"videos": videos},
+	)
 }
 
 /*
