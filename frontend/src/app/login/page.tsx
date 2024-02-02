@@ -19,6 +19,8 @@ import {
 	Typography
 } from "@mui/material";
 
+import { useRouter } from "next/navigation";
+
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -28,8 +30,8 @@ import { default as LoginSVG } from '../../../public/login.svg';
 
 import ButtonComponent from '@/app/ui/ButtonComponent';
 import Link from 'next/link';
-import { isEmptyOrUndefined } from '../lib/utils';
 
+import { isEmptyOrUndefined } from  '../lib/utils';
 import User from '../lib/definitions';
 
 
@@ -37,20 +39,23 @@ interface LoginFormProps {
 }
 
 const LogIn = async (userData: User, apiUrl: string) => {
-
 	if(!isEmptyOrUndefined (userData.Email, 'string')
 		&& !isEmptyOrUndefined(userData.Password, 'string'))
 	{
 		const response = await axios.post(`${apiUrl}/login`, userData);
 		if(response.status === 200){
-			console.log(response.data.token);
-		}
+			document.cookie = `token=${response.data.token}; path=/`;
+			return true
+		} 
+		return false;
 	} else {
 		alert('Por favor, rellene todos los campos');
 	}
 }
 
 const LoginForm: React.FC<LoginFormProps> = () => {
+	const router = useRouter();
+
 	const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 	
 	const [userData, setUserData] = React.useState({'Email': '', 'Password': '', 'Id': -1, 'Name': ''});
@@ -58,7 +63,13 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 
 	const handleClick = () => {
-		LogIn(userData, apiUrl);
+		LogIn(userData, apiUrl).then((response) => {
+			if(response){
+				router.push('/myHls');
+			} else {
+				alert('Usuario o contraseña incorrectos');
+			}
+		});
 	}
 
 	return (	

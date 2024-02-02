@@ -29,37 +29,8 @@ const UserInterface: React.FC<UserInterfaceProps> = () => {
 	const [videoList, setVideoList] = useState([]);
 	const [activeVideo, setActiveVideo] = useState('');
 
-	const [users, setUsers] = useState<User[]>([]);
 	const [userData, setUserData] = useState({ Email: '', Name: '', Password: '', Id: -1});
-	const [newUser, setNewUser] = useState({ Email: '', Name: '', Password: '', Id: -1});
-	const [updateUser, setUpdateUser] = useState({ Id: '', Email: '', Name: '', Password: ''});
 
-
-	
-	// fetch users from backend
-	const fetchUsers = async () => {
-		try {
-			if (loginJWT !== null || loginJWT !== undefined || loginJWT !== '') {
-				const response = await axios.get(`${apiUrl}/users`, {
-					headers: {
-						'Authorization': `${loginJWT}`,
-					},
-				})
-				setUsers(response.data.users);
-			}
-		} catch (error) {
-			console.log("Error While fetching Data", error);
-		}
-	}
-
-	const login = async () => {
-		try {
-			const response = await axios.post(`${apiUrl}/login`, userData);
-			setLoginJWT(response.data.token);
-		} catch (error) {
-			console.log("Error While Logging In", error);
-		}
-	}
 
 	const fetchVideos = async () => {
 		try {
@@ -82,16 +53,6 @@ const UserInterface: React.FC<UserInterfaceProps> = () => {
 			// fetchUsers();
 		}
 	}, [loginJWT]);
-
-	// create user
-	// const createUser = async () => {
-	// 	try {
-	// 		const response = await axios.post(`${apiUrl}/signup`, newUser);
-	// 		setUsers([...users, response.data.user]);
-	// 	} catch (error) {
-	// 		console.log("Error While Creating User", error);
-	// 	}
-	// }
 
 	// const updateUserData = async () => {
 	// 	try {
@@ -151,10 +112,7 @@ const UserInterface: React.FC<UserInterfaceProps> = () => {
 						<video id="video" width="720" height="360" controls />
 					</Grid>
 				</Grid>
-				:
-				<Grid item>
-					<LoginForm userData={userData} setUserData={setUserData} logIn={login}/>
-				</Grid>
+				: null
 			}
 		</div>
 
