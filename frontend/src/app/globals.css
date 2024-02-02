@@ -1,23 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind body;
 
-/* :root {
-  --text: #eae9fc;
-  --background: #19191f;
-  --primary: #3a31d8;
-  --secondary: #46547c;
-  --accent: #2ed1a8;
-} */
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  :root {
+    --text: #ffffff;
+    --background: #3A3838;
+    --primary: #EF5D70;
+    --secondary: #EFD677;
+    --accent: #EF9873;
+  }
 }
 
 @layer utilities {

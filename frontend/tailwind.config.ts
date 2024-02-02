@@ -8,11 +8,11 @@ const config: Config = {
   ],
   theme: {
     colors: {
-      'text': '#ffffff',
-      'background': '#211f1f',
-      'primary': '#EF426F',
-      'secondary': '#ffffff',
-      'accent': '#EFF178',
+      'text': 'var(--text)',
+      'background': 'var(--background)',
+      'primary': 'var(--primary)',
+      'secondary': 'var(--secondary)',
+      'accent': 'var(--accent)',
     },
     fontSize: {
       sm: '0.707rem',

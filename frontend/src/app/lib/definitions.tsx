@@ -9,7 +9,8 @@ export interface Video {
     fileId: string;
 }
 
-export type voidFunc = () => Promise<void>;
+export type voidFuncPromise = () => Promise<void>;
+export type voidFunc = () => void;
 
 export type changeState = (params: any) => any;
 

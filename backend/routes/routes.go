@@ -18,7 +18,7 @@ func RegisterRoutes(server *gin.Engine) {
 	authenticated.PUT("/users/:id", updateUser)
 
 	authenticated.GET("/videos", getVideoList)
-	authenticated.StaticFS("/videos", http.Dir("./static/videos"))
+	server.StaticFS("/videos", http.Dir("./static/videos"))
 
 	// authenticated.POST("/events", createEvent)
 	// authenticated.PUT("/events/:id", updateEvent)

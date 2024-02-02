@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 
@@ -19,11 +19,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} antialiased`}>
+      <body 
+        className={`
+          ${montserrat.className}
+          text-[#fff] 
+          bg-[#1E1E1E]
+          primary-[#EF5D70]
+          secondary-[#EFD677]
+          accent-[#EF9873]
+        `} >
         <AppRouterCacheProvider>
-          <NavBar>
-            {children}
-          </NavBar>
+          <NavBar />
+          {children}
         </AppRouterCacheProvider>
        </body>
     </html>

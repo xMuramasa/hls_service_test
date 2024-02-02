@@ -34,29 +34,7 @@ const UserInterface: React.FC<UserInterfaceProps> = () => {
 	const [newUser, setNewUser] = useState({ Email: '', Name: '', Password: '', Id: -1});
 	const [updateUser, setUpdateUser] = useState({ Id: '', Email: '', Name: '', Password: ''});
 
-	useEffect(() => {
-		if (HlsSupported && !isEmptyOrUndefined(activeVideo, 'string') ) {
-			var video: any = document.getElementById('video');
 
-			const hls = new Hls({
-				fetchSetup: function (context, initParams) {
-					// Always send cookies, even for cross-origin calls.
-					initParams.credentials = 'include';
-					initParams.headers ={
-						Authorization: loginJWT,
-					}
-					return new Request(context.url, initParams);
-				},
-			})
-
-			// bind them together
-			hls.attachMedia(video);
-			
-			hls.loadSource(`${apiUrl}/videos/${activeVideo}/segment.m3u8`);
-			// bind them together
-			hls.attachMedia(video)
-		}
-	}, [activeVideo]);
 	
 	// fetch users from backend
 	const fetchUsers = async () => {

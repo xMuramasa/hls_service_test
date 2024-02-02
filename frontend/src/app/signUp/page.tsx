@@ -1,74 +1,63 @@
-"use client"
+"use client";
 
 import React from 'react';
+import { FormControl, Grid, IconButton, Input, InputAdornment, InputLabel, Paper, Typography } from '@mui/material';
 
 import axios from 'axios';
 
-import { 
-	Autocomplete,
-	Box,
-	Button,
-	FormControl,
-	Grid,
-	IconButton,
-	Input,
-	InputAdornment,
-	InputLabel,
-	Paper,
-	TextField,
-	Typography
-} from "@mui/material";
-
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 import Image from 'next/image';
-
-import { default as LoginSVG } from '../../../public/login.svg';
-
-import ButtonComponent from '@/app/ui/ButtonComponent';
 import Link from 'next/link';
-import { isEmptyOrUndefined } from '../lib/utils';
 
+import CreateAccountSVG from '../../../public/CreateAcc.svg';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import ButtonComponent from '@/app/ui/ButtonComponent';
+
+
+import { isEmptyOrUndefined } from '../lib/utils';
 import User from '../lib/definitions';
 
-
-interface LoginFormProps {
+interface CreateAccountFormProps {
 }
 
-const LogIn = async (userData: User, apiUrl: string) => {
-
-	if(!isEmptyOrUndefined (userData.Email, 'string')
-		&& !isEmptyOrUndefined(userData.Password, 'string'))
-	{
-		const response = await axios.post(`${apiUrl}/login`, userData);
-		if(response.status === 200){
-			console.log(response.data.token);
+const createUser = async (newUser: User, apiUrl: string) => {
+		try {
+			if (!isEmptyOrUndefined(newUser.Email, 'string')
+				&& !isEmptyOrUndefined(newUser.Password, 'string')
+				&& !isEmptyOrUndefined(newUser.Name, 'string')){
+					
+					const response = await axios.post(`${apiUrl}/signup`, newUser);
+					if(response.status === 200){
+						console.log(response.data);
+					}
+				} else {
+					alert('Por favor, rellene todos los campos');
+				}
+		} catch (error) {
+			alert("Hubo un error :c");
 		}
-	} else {
-		alert('Por favor, rellene todos los campos');
 	}
-}
 
-const LoginForm: React.FC<LoginFormProps> = () => {
-	const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
-	
+const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+
 	const [userData, setUserData] = React.useState({'Email': '', 'Password': '', 'Id': -1, 'Name': ''});
-	const [showPassword, setShowPassword] = React.useState(false);
+
+  const [showPassword, setShowPassword] = React.useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-	const handleClick = () => {
-		LogIn(userData, apiUrl);
+  const handleClick = () => {
+		createUser(userData, apiUrl);
 	}
 
-	return (	
-		<Grid container justifyContent={"center"} sx={{ mt:12 }}>
+  return (
+	<Grid container justifyContent={"center"} sx={{ mt:12 }}>
 			<Paper elevation={2} sx={{ maxWidth: '25vw', minHeight: '60vh', borderRadius: 5, backgroundColor: "#3A3838" }}>
 				<Grid container direction={"column"} justifyContent={'space-evenly'} alignItems={"center"} >
 					<Grid item xs={12}>
 						<Image
 							priority
-							src={LoginSVG}
+							src={CreateAccountSVG}
 							width={250}
 							alt="Create an account"
 						/>
@@ -85,6 +74,19 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 								}}
 								/>
 						</FormControl>
+			
+						<FormControl variant="standard" sx={styles.textBox}>
+							<InputLabel>Name</InputLabel>
+							<Input
+								id="name"
+								type={'text'}
+								value={userData.Name}
+								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+									setUserData({...userData, Name: event.target.value});
+								}}
+							/>
+						</FormControl>
+
 						<FormControl variant="standard" sx={styles.textBox}>
 							<InputLabel>Password</InputLabel>
 							<Input
@@ -109,22 +111,13 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 						</FormControl>						
 					</Grid>
 					<Grid item xs>
-						<ButtonComponent text={"Iniciar Sesion"} onClick={handleClick} />
-					</Grid>
-					<Grid item xs container>
-						<Typography variant={'h6'} sx={{ color: '#fff', mt: 2 }}>
-							<Link href={'/signUp'} > 
-								¿No tienes cuenta?  &nbsp; <u> Registrame Ahora! </u>
-							</Link>
-						</Typography>
+						<ButtonComponent text={"Registrame!"} onClick={handleClick} />
 					</Grid>
 				</Grid>
 			</Paper>
 		</Grid>
-	)
-
+  );
 }
-
 
 const styles = {
 	textBox: {
@@ -134,4 +127,4 @@ const styles = {
 	},
 }
 
-export default LoginForm;
+export default CreateAccountForm;
