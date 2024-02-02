@@ -8,6 +8,7 @@ import {
 	Autocomplete,
 	Box,
 	Button,
+	FilledInput,
 	FormControl,
 	Grid,
 	IconButton,
@@ -72,10 +73,16 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 		});
 	}
 
-	return (	
-		<Grid container justifyContent={"center"} sx={{ mt:12 }}>
-			<Paper elevation={2} sx={{ maxWidth: '25vw', minHeight: '60vh', borderRadius: 5, backgroundColor: "#3A3838" }}>
-				<Grid container direction={"column"} justifyContent={'space-evenly'} alignItems={"center"} >
+	return (
+		<Grid container justifyContent={"center"} >
+			<Paper elevation={2} 
+				sx={{ 
+					maxWidth: '25vw', minHeight: '60vh', borderRadius: 5,
+					backgroundColor: "#3A3838", mt: 4 }}
+				>
+				<Grid container direction={"column"} justifyContent={'center'} 
+					alignItems={"center"} sx={{ p: 4, mt: 6 }}
+				>
 					<Grid item xs={12}>
 						<Image
 							priority
@@ -84,10 +91,10 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 							alt="Create an account"
 						/>
 					</Grid>
-					<Grid item xs>
-						<FormControl variant="standard" sx={styles.textBox}>
+					<Grid item xs={12} >
+						<FormControl sx={styles.textBox}>
 							<InputLabel>Email</InputLabel>
-							<Input
+							<FilledInput
 								id="email"
 								type={'text'}
 								value={userData.Email}
@@ -96,9 +103,9 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 								}}
 								/>
 						</FormControl>
-						<FormControl variant="standard" sx={styles.textBox}>
+						<FormControl sx={styles.textBox}>
 							<InputLabel>Password</InputLabel>
-							<Input
+							<FilledInput
 								id="pwd"
 								type={showPassword ? 'text' : 'password'}
 								endAdornment={
@@ -119,16 +126,16 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 								/>
 						</FormControl>						
 					</Grid>
-					<Grid item xs>
+					<Grid item xs={12}>
 						<ButtonComponent text={"Iniciar Sesion"} onClick={handleClick} />
 					</Grid>
-					<Grid item xs container>
-						<Typography variant={'h6'} sx={{ color: '#fff', mt: 2 }}>
-							<Link href={'/signUp'} > 
+				</Grid>
+				<Grid container justifyContent={"center"} alignItems={"flex-end"}>
+					<Link href={'/signUp'} > 
+						<Typography variant={'h6'} sx={{ color: '#fff' }}>
 								¿No tienes cuenta?  &nbsp; <u> Registrame Ahora! </u>
-							</Link>
 						</Typography>
-					</Grid>
+					</Link>
 				</Grid>
 			</Paper>
 		</Grid>
@@ -140,8 +147,8 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 const styles = {
 	textBox: {
 		width: '80%',
-		mt: 12,
-		p: 1,
+		m: 4,
+		backGroundColor: '#D9D9D9',
 	},
 }
 

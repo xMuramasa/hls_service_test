@@ -1,20 +1,20 @@
 "use client";
 
 import React from 'react';
-import { FormControl, Grid, IconButton, Input, InputAdornment, InputLabel, Paper, Typography } from '@mui/material';
+import { FilledInput, FormControl, Grid, IconButton, Input, InputAdornment, InputLabel, Paper, Typography } from '@mui/material';
 
 import axios from 'axios';
 
 import Image from 'next/image';
 import Link from 'next/link';
 
-import CreateAccountSVG from '../../../public/CreateAcc.svg';
+import CreateAccountSVG from '../../../../public/CreateAcc.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import ButtonComponent from '@/app/ui/ButtonComponent';
 
 
-import { isEmptyOrUndefined } from '../lib/utils';
-import User from '../lib/definitions';
+import { isEmptyOrUndefined } from '../../lib/utils';
+import User from '../../lib/definitions';
 
 interface CreateAccountFormProps {
 }
@@ -51,9 +51,15 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 	}
 
   return (
-	<Grid container justifyContent={"center"} sx={{ mt:12 }}>
-			<Paper elevation={2} sx={{ maxWidth: '25vw', minHeight: '60vh', borderRadius: 5, backgroundColor: "#3A3838" }}>
-				<Grid container direction={"column"} justifyContent={'space-evenly'} alignItems={"center"} >
+	<Grid container justifyContent={"center"} >
+			<Paper elevation={2} 
+				sx={{ 
+					maxWidth: '25vw', minHeight: '60vh', borderRadius: 5,
+					backgroundColor: "#3A3838", mt: 4 }}
+				>
+				<Grid container direction={"column"} justifyContent={'center'} 
+					alignItems={"center"} sx={{ p: 4, mt: 4 }}
+				>
 					<Grid item xs={12}>
 						<Image
 							priority
@@ -62,10 +68,10 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 							alt="Create an account"
 						/>
 					</Grid>
-					<Grid item xs>
+					<Grid item xs={12}>
 						<FormControl variant="standard" sx={styles.textBox}>
 							<InputLabel>Email</InputLabel>
-							<Input
+							<FilledInput
 								id="email"
 								type={'text'}
 								value={userData.Email}
@@ -77,7 +83,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 			
 						<FormControl variant="standard" sx={styles.textBox}>
 							<InputLabel>Name</InputLabel>
-							<Input
+							<FilledInput
 								id="name"
 								type={'text'}
 								value={userData.Name}
@@ -89,7 +95,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 
 						<FormControl variant="standard" sx={styles.textBox}>
 							<InputLabel>Password</InputLabel>
-							<Input
+							<FilledInput
 								id="pwd"
 								type={showPassword ? 'text' : 'password'}
 								endAdornment={
@@ -110,7 +116,7 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 								/>
 						</FormControl>						
 					</Grid>
-					<Grid item xs>
+					<Grid item xs={12}>
 						<ButtonComponent text={"Registrame!"} onClick={handleClick} />
 					</Grid>
 				</Grid>
@@ -122,8 +128,8 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 const styles = {
 	textBox: {
 		width: '80%',
-		mt: 12,
-		p: 1,
+		m: 4,
+		backGroundColor: '#D9D9D9',
 	},
 }
 

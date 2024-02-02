@@ -23,7 +23,7 @@ export default function RootLayout({
         className={`
           ${montserrat.className}
           text-[#fff] 
-          bg-[#1E1E1E]
+          bg-[#131313]
           primary-[#EF5D70]
           secondary-[#EFD677]
           accent-[#EF9873]
