@@ -15,24 +15,29 @@ interface MyPageProps {
 
 const MyPage: React.FC<MyPageProps> = () => {
 
-	const [logged, setLogged] = React.useState(false);
+	const [logged, setLogged]: any = React.useState(null);
 
 	const router = useRouter();
 
 	React.useEffect(() => {
 		const cookies = document.cookie;
 		const token = cookies.split(';').find(cookie => cookie.includes('token'))?.split('=');
-		console.log('tokenId', token)
+		console.log('token', token)
 		if (token && token[1] !== "") {
 			setLogged(true)
+		} else {
+			setLogged(false)
 		}
 	}, []);
 
 	return (
 		<>
 			{
-				!logged ? router.push("/")
-				: 
+				logged === null ?
+					<></>
+				: !logged ? 
+					router.push("/")
+				:
 				<Grid container direction={"column"} justifyContent={"center"} px={10} pt={2} >
 					<Grid item xs={12} container justifyContent={"flex-end"}>
 						<Image

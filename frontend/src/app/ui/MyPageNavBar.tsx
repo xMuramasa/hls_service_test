@@ -11,8 +11,6 @@ import {
   Typography,
 } from '@mui/material';
 
-import AdbIcon from '@mui/icons-material/Adb';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -23,7 +21,7 @@ import ButtonComponent from './ButtonComponent';
 function ResponsiveAppBar() {
 
   const handleClick = () => {
-		document.cookie = ``;
+		document.cookie = `token=`;
   }
 
   return (

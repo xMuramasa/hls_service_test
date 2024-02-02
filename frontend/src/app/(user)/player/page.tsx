@@ -24,16 +24,17 @@ interface PlayerProps {
 
 const  Player: React.FC<PlayerProps>= (props) => {
 
-	const [logged, setLogged] = React.useState(false);
+	const [logged, setLogged]: any = React.useState(null);
 
 	const router = useRouter();
 
 	React.useEffect(() => {
 		const cookies = document.cookie;
 		const token = cookies.split(';').find(cookie => cookie.includes('token'))?.split('=');
-		console.log('tokenId', token)
 		if (token && token[1] !== "") {
 			setLogged(true)
+		} else {
+			setLogged(false)
 		}
 	}, []);
 
@@ -41,7 +42,6 @@ const  Player: React.FC<PlayerProps>= (props) => {
 
 	const {
 		apiUrl = 'http://localhost:8080',
-		loginJWT,
 		activeVideo = 'big_bunny',
 	} = props;
 	
@@ -55,7 +55,7 @@ const  Player: React.FC<PlayerProps>= (props) => {
 					// Always send cookies, even for cross-origin calls.
 					initParams.credentials = 'include';
 					initParams.headers ={
-						// Authorization: loginJWT,
+					Authorization: logged,
 					}
 					return new Request(context.url, initParams);
 				},
@@ -72,17 +72,14 @@ const  Player: React.FC<PlayerProps>= (props) => {
 		}
 	}, [activeVideo]);
 
-
-	function handleClick(): void {
-
-	}
-
 	return (
 		<>
-		{ !logged ? router.push("/")
-			:
+		{ logged === null ? <></>
+		: !logged ? 
+			router.push("/")
+		:
 			<Paper sx={{ backgroundColor: "#1E1E1E", height:'100vh', m:0, borderRadius: 0 }}>
-				<Button onClick={handleClick} sx={{ backgroundColor: '#313131', height: '6vh', position:'absolute', m: 2, pl: 2, pt:1 }}>
+				<Button sx={{ backgroundColor: '#313131', height: '6vh', position:'absolute', m: 2, pl: 2, pt:1 }}>
 					<Link href="/myHls">
 						<Grid container justifyContent={"center"} alignItems={"center"}>
 							<Grid item xs>
@@ -91,7 +88,7 @@ const  Player: React.FC<PlayerProps>= (props) => {
 						</Grid>
 					</Link>
 					</Button>
-				<video id="video" controls height={"100%"} width={"100%"} />
+				<video id="video" controls height={"90%"} width={"100%"} />
 			</Paper>
 		}
 		</>
