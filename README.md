@@ -1,5 +1,14 @@
 # HLS service test demo
 
+### Frontend Design
+
+- [figma](https://www.figma.com/file/KnBDgGpW5ZaOzzh4hD6X9t/ZappingTest?type=design&node-id=0%3A1&mode=design&t=htHvUseiQqDHiRJD-1)
+
+### Image
+
+<img src="resources/landing.png" alt="landing" width="500"></img>
+
+
 ## Description
 
 This is a demo to test a HLS service.

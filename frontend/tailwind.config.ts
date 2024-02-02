@@ -7,19 +7,12 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-    },
     colors: {
-      'text': 'var(--text)',
-      'background': 'var(--background)',
-      'primary': 'var(--primary)',
-      'secondary': 'var(--secondary)',
-      'accent': 'var(--accent)',
+      'text': '#ffffff',
+      'background': '#211f1f',
+      'primary': '#EF426F',
+      'secondary': '#ffffff',
+      'accent': '#EFF178',
     },
     fontSize: {
       sm: '0.707rem',
@@ -29,14 +22,6 @@ const config: Config = {
       '3xl': '2.827rem',
       '4xl': '3.997rem',
       '5xl': '5.652rem',
-    },
-    fontFamily: {
-      heading: 'Ubuntu',
-      body: 'Nunito Sans',
-    },
-    fontWeight: {
-      normal: '400',
-      bold: '700',
     },
   },
   plugins: [],

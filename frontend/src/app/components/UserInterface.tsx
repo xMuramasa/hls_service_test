@@ -7,15 +7,14 @@ import axios from "axios";
 import UserCardComponent from "./UserCardComponent";
 import { Button, Grid } from "@mui/material";
 
-import User from "../interfaces/Interfaces";
+import User from "../lib/definitions";
 import CreateUserForm from "./CreateUserForm";
 import UpdateUserForm from "./UpdateUserForm";
 import LoginForm from "./LoginForm";
 
-import { getFromLocalStorage, saveToLocalStorage } from "../utils/localStorage";
 import Hls from "hls.js";
 
-import { isEmptyOrUndefined } from "../utils/utils";
+import { isEmptyOrUndefined, saveToLocalStorage, getFromLocalStorage } from "../lib/utils";
 
 interface UserInterfaceProps {
 }

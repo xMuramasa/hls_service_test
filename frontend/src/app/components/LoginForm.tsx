@@ -20,7 +20,7 @@ import {
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import { changeState, voidFunc, User } from "../interfaces/Interfaces";
+import { changeState, voidFunc, User } from "../lib/definitions";
 
 
 
