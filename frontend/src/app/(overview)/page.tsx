@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -15,15 +15,19 @@ export default function Home() {
   var imageWidth = 1546;
   var imageHeight = 670;
 
-  var renderedWidth = imageWidth;
-  var renderedHeight = imageHeight;
+  var renderedWidth = useRef(imageWidth);
+  var renderedHeight = useRef(imageHeight);
+
+  useEffect(() => {
+    if (window !== undefined) {
+      window.addEventListener("resize", () => {
+        var windowWidth = window.innerWidth;
+        renderedWidth.current = imageWidth;
+        renderedHeight.current = imageHeight * (windowWidth / imageWidth);
+      });
+    }
+  })
   
-  if (window !== undefined) {
-  
-    var windowWidth = window.innerWidth;
-    var renderedWidth = imageWidth;
-    var renderedHeight = imageHeight * (windowWidth / imageWidth);
-  }
 
   return (
       <Grid container
@@ -47,7 +51,7 @@ export default function Home() {
             alignItems={"flex-end"}
             sx={{ 
               height: imageHeight,
-              width: renderedWidth/2.5,
+              width: renderedWidth.current/2.5,
               backdropFilter: "blur(7px)",
               backgroundColor: "rgba(0, 0, 0, 0.5)"
             }}
@@ -60,7 +64,7 @@ export default function Home() {
                 <Image
                   priority
                   src={'/static/svgs/splash.svg'}
-                  width={renderedWidth/2.5}
+                  width={renderedWidth.current/2.5}
                   height={imageHeight/2}
                   alt="MyHls"
                 />
