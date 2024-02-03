@@ -40,8 +40,6 @@ const  Player = () => {
 	React.useEffect(() => {
 		if (HlsSupported && !isEmptyOrUndefined(params?.videoId, 'string') ) {
 			var video: any = document.getElementById('video');
-			
-			console.log('logged', logged)
 
 			const hls = new Hls({
 				fetchSetup: function (context, initParams) {

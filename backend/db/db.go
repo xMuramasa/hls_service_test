@@ -2,7 +2,7 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
+	"os"
 
 	_ "github.com/lib/pq"
 )
@@ -18,8 +18,8 @@ const (
 )
 
 func InitDB() {
-	// psqlInfo := os.Getenv("DATABASE_URL")
-	psqlInfo := fmt.Sprintf("port=%d user=%s password=%s dbname=%s sslmode=disable", port, dbuser, dbpass, dbname)
+	psqlInfo := os.Getenv("DATABASE_URL")
+	// psqlInfo := fmt.Sprintf("port=%d user=%s password=%s dbname=%s sslmode=disable", port, dbuser, dbpass, dbname)
 
 	var err error
 
