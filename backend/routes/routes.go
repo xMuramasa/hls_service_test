@@ -11,17 +11,16 @@ func RegisterRoutes(server *gin.Engine) {
 
 	server.GET("/", getAPIUp)
 
+	server.POST("/signup", signup)
+	server.POST("/login", login)
+
 	authenticated := server.Group("/")
 	authenticated.Use(middlewares.Authenticate)
 
-	authenticated.GET("/users", getUsers)
 	authenticated.PUT("/users/:id", updateUser)
 
 	authenticated.GET("/videos", getVideoList)
-	server.StaticFS("/videos", http.Dir("./static/videos"))
-
-	server.POST("/signup", signup)
-	server.POST("/login", login)
+	authenticated.StaticFS("/videos", http.Dir("./static/videos"))
 
 }
 
