@@ -48,15 +48,4 @@ func createTables() {
 		panic("Could not create users table")
 	}
 
-	createVideosTable := `
-	create table if not exists videos(
-		id serial primary key,
-		name text not null,
-		metadata text not null
-	)`
-
-	_, err = DB.Exec(createVideosTable)
-	if err != nil {
-		panic("Could not create videos table")
-	}
 }
