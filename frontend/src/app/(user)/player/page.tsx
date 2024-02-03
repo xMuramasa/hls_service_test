@@ -44,6 +44,8 @@ const  Player: React.FC<PlayerProps>= (props) => {
 	React.useEffect(() => {
 		if (HlsSupported && !isEmptyOrUndefined(activeVideo, 'string') ) {
 			var video: any = document.getElementById('video');
+			
+			console.log('logged', logged)
 
 			const hls = new Hls({
 				fetchSetup: function (context, initParams) {
@@ -55,7 +57,6 @@ const  Player: React.FC<PlayerProps>= (props) => {
 					return new Request(context.url, initParams);
 				},
 			})
-
 			// bind them together
 			hls.attachMedia(video);
 			
@@ -65,7 +66,7 @@ const  Player: React.FC<PlayerProps>= (props) => {
 		} else {
 			console.log('HLS is not supported or video is not selected');
 		}
-	}, [activeVideo]);
+	}, [activeVideo, logged]);
 
 	return (
 		<>

@@ -1,6 +1,6 @@
 import { montserrat } from "@/app/ui/fonts"
 
-import MyPageNavBar from "@/app/ui/MyPageNavBar"
+import NavBar from "@/app/ui/NavBar"
 
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
       <body className={`${montserrat.className}`}
       style={{ backgroundColor: '#131313', margin: 0, padding: 0}}
       >
-        <MyPageNavBar />
+        <NavBar Type="user"/>
         {children}
       </body>
     </html>

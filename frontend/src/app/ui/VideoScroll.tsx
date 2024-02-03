@@ -11,7 +11,7 @@ import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRound
 import VideoCard from '@/app/ui/VideoCard';
 import { isEmptyOrUndefined } from '@/app/lib/utils';
 
-const fetchVideos = async (loginJWT: string, apiUrl: string) => {
+const fetchVideos = async (loginJWT: string | undefined, apiUrl: string) => {
 	let videos = [...VideoList]
 	try {
 		if (!isEmptyOrUndefined(loginJWT, 'string')) {
@@ -36,7 +36,10 @@ const fetchVideos = async (loginJWT: string, apiUrl: string) => {
 async function VideoScroll () {
 	
 	const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
-	const loginJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQHRlc3QuY29tIiwiZXhwIjoxNzA2OTA4ODMwLCJpZCI6MX0.bYRMl-Xe_RfY1hxy68QbiEqpwiuZobYoVr7aUdT0F-I';
+	
+	const cookies = document.cookie;
+	const loginJWT = cookies.split(';').find(cookie => cookie.includes('token'))?.split('=')[1];
+
 	
 	const videos = await fetchVideos(loginJWT, apiUrl);
 

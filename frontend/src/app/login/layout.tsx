@@ -1,4 +1,4 @@
-import LoginNav from "@/app/ui/LoginNav"
+import NavBar from "@/app/ui/NavBar"
 
 export default function RootLayout({
   children,
@@ -7,9 +7,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body style={{ backgroundColor: '#131313', margin: 0, padding: 0}}
-      >
-        <LoginNav />
+      <body style={{ backgroundColor: '#131313', margin: 0, padding: 0}} >
+        <NavBar Type="login"/>
         {children}
       </body>
     </html>

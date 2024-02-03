@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { montserrat } from "./fonts";
+import { Grid } from "@mui/material";
 
 const links = [
   { name: 'Home', href: '/', icon: 'HomeIcon' },
@@ -24,17 +25,19 @@ const links = [
 
 export default function NavLinks() {
   return (
-    <>
+    <Grid container>
       {links.map((link) => {
         return (
-          <Link
-            key={link.name}
-            href={link.href}
-          >
-            <p className={`${montserrat.className}`}>{link.name}</p>
-          </Link>
+          <Grid item xs key={link.name}>
+            <Link
+              key={link.name}
+              href={link.href}
+            >
+              <p className={`${montserrat.className}`}>{link.name}</p>
+            </Link>
+          </Grid>
         );
       })}
-    </>
+    </Grid>
   );
 }

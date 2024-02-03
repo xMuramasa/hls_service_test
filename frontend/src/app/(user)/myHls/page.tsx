@@ -19,7 +19,6 @@ const MyPage: React.FC<MyPageProps> = () => {
 	React.useEffect(() => {
 		const cookies = document.cookie;
 		const token = cookies.split(';').find(cookie => cookie.includes('token'))?.split('=');
-		console.log('token', token)
 		if (token && token[1] !== "") {
 			setLogged(true)
 		} else {

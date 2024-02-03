@@ -2,7 +2,6 @@ import "../globals.css";
 
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 
-
 import NavBar from "@/app/ui/NavBar";
 import { montserrat } from "@/app/ui/fonts";
 
@@ -23,7 +22,7 @@ export default function RootLayout({
           accent-[#EF9873]
         `} >
         <AppRouterCacheProvider>
-          <NavBar />
+          <NavBar Type={"home"}/>
           {children}
         </AppRouterCacheProvider>
        </body>

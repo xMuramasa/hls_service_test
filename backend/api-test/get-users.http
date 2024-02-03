@@ -1,2 +1,0 @@
-GET http://localhost:8080/users
-authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQHRlc3QuY29tIiwiZXhwIjoxNzA2NzUzNjE0LCJpZCI6MX0.NyPNcSAKgw8-VKqsLgRNyjLu8_bzqOMBQt-1rtyNA50

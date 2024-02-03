@@ -59,16 +59,4 @@ func createTables() {
 	if err != nil {
 		panic("Could not create videos table")
 	}
-
-	// createRegistrationsTable := `
-	// create table if not exists registrations(
-	// 	id serial primary key,
-	// 	user_id serial references users(id),
-	// 	event_id serial references events(id)
-	// )`
-
-	// _, err = DB.Exec(createRegistrationsTable)
-	// if err != nil {
-	// 	panic("Could not create registrations table")
-	// }
 }
