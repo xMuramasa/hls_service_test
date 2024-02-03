@@ -3,15 +3,12 @@
 import React, { Suspense } from 'react';
 import { useRouter } from "next/navigation";
 
-import MyHlsSVG from '../../../../public/MyHls.svg';
-
 import Image from 'next/image';
 
 import { Grid, Paper } from '@mui/material';
-import VideoScroll from '@/app/ui/VideoScroll';
 
-interface MyPageProps {
-}
+import { MyPageProps } from '@/app/lib/definitions';
+import VideoScroll from '@/app/ui/VideoScroll';
 
 const MyPage: React.FC<MyPageProps> = () => {
 
@@ -42,7 +39,9 @@ const MyPage: React.FC<MyPageProps> = () => {
 					<Grid item xs={12} container justifyContent={"flex-end"}>
 						<Image
 							priority
-							src={MyHlsSVG}
+							src={'/static/svgs/MyHls.svg'}
+							width={320}
+							height={180}
 							alt="MyHls"
 							/>
 					</Grid>
@@ -56,7 +55,6 @@ const MyPage: React.FC<MyPageProps> = () => {
 					</Grid>
 				</Grid>
 			}
-		
 		</>
 	);
 }

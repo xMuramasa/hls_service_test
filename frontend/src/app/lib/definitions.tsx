@@ -5,13 +5,34 @@ export interface User {
     Password: any;
 }
 
+export interface ButtonProps {
+    text: string;
+    onClick: voidFunc;
+}
+
 export interface Video {
     fileId: string;
 }
 
+export interface VideoCard {
+	Name: string,
+	Description: string,
+	Thumbnail: string | any,
+	Video: string,
+}
+
+export interface MyPageProps {
+}
+
+export interface PlayerProps {
+	apiUrl: string,
+	HlsSupported: boolean,
+	loginJWT: string,
+	activeVideo: string,
+}
+
 export type voidFuncPromise = () => Promise<void>;
+
 export type voidFunc = () => void;
 
 export type changeState = (params: any) => any;
-
-export default User;

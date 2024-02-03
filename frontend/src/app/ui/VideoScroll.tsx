@@ -3,18 +3,13 @@
 import React from 'react';
 import axios from 'axios';
 
-import BigBunny from '../../../public/big-buck-bunny.png';
-import Hero from '../../../public/hero.jpg';
-
-
-import VideoCard from './VideoCard';
-
 import { Grid, IconButton } from '@mui/material';
-import { isEmptyOrUndefined } from '../lib/utils';
 
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 
+import VideoCard from '@/app/ui/VideoCard';
+import { isEmptyOrUndefined } from '@/app/lib/utils';
 
 const fetchVideos = async (loginJWT: string, apiUrl: string) => {
 	let videos = [...VideoList]
@@ -89,84 +84,84 @@ const VideoList = [
 		"Id": 1,
 		"Name": "Big Bunny",
 		"Description": "Demo Video for HLS Streaming",
-		"Thumbnail": BigBunny,
+		"Thumbnail": '/static/images/big-buck-bunny.png',
 		"Video": "big_bunny.mp4"
 	},
 	{
 		"Id": 2,
 		"Name": "Lorem Ipsum",
 		"Description": "Lorem Ipsum",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 3,
 		"Name": "Dolor Sit",
 		"Description": "Dolor Sit",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 4,
 		"Name": "Amet Consectetur",
 		"Description": "Amet Consectetur",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 5,
 		"Name": "Adipiscing Elit",
 		"Description": "Adipiscing Elit",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 6,
 		"Name": "Sed Do Eiusmod",
 		"Description": "Sed Do Eiusmod",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 7,
 		"Name": "Tempor Incididunt",
 		"Description": "Tempor Incididunt",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 8,
 		"Name": "Labore Et Dolore",
 		"Description": "Labore Et Dolore",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 9,
 		"Name": "Magna Aliqua",
 		"Description": "Magna Aliqua",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 10,
 		"Name": "Ut Enim Ad Minim",
 		"Description": "Ut Enim Ad Minim",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 11,
 		"Name": "Veniam Quis Nostrud",
 		"Description": "Veniam Quis Nostrud",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 	{
 		"Id": 12,
 		"Name": "Exercitation Ullamco",
 		"Description": "Exercitation Ullamco",
-		"Thumbnail": Hero,
+		"Thumbnail": "/static/images/hero.jpg",
 		"Video": ""
 	},
 

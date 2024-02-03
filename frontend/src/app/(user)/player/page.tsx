@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from 'react';
+import Link from 'next/link';
 import { useRouter } from "next/navigation";
 
 import {
@@ -12,15 +13,9 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import Hls from "hls.js";
 
-import { isEmptyOrUndefined } from "../../lib/utils";
-import Link from 'next/link';
 
-interface PlayerProps {
-	apiUrl: string,
-	HlsSupported: boolean,
-	loginJWT: string,
-	activeVideo: string,
-}
+import { PlayerProps } from '@/app/lib/definitions';
+import { isEmptyOrUndefined } from "@/app/lib/utils";
 
 const  Player: React.FC<PlayerProps>= (props) => {
 

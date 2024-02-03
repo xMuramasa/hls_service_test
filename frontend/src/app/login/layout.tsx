@@ -1,5 +1,4 @@
-import LoginNav from "../ui/LoginNav"
-
+import LoginNav from "@/app/ui/LoginNav"
 
 export default function RootLayout({
   children,

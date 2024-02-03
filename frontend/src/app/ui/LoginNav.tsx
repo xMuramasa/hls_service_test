@@ -14,8 +14,6 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
-import HlsVideo from '../../../public/HlsVideo.svg';
-
 
 function ResponsiveAppBar() {
 
@@ -26,16 +24,17 @@ function ResponsiveAppBar() {
 		<Container maxWidth="xl">
 		  <Toolbar disableGutters>
 			<Grid container justifyContent={"space-between"} alignItems={"center"}>
-                <Link href="/">
-                    <Grid item xs container alignItems={"center"}>
-                        <Image
-                            priority
-                            src={HlsVideo}
-                            width={180}
-                            alt="Home"
-                        />
-                    </Grid>
-                </Link>
+        <Link href="/">
+          <Grid item xs container alignItems={"center"}>
+            <Image
+              priority
+              src={'/static/svgs/Logo.svg'}
+              width={180}
+              height={60}
+              alt="Home"
+            />
+          </Grid>
+        </Link>
 			</Grid>
 		  </Toolbar>
 		</Container>

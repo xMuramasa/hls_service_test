@@ -1,40 +1,31 @@
 "use client"
 
 import React from 'react';
-
 import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from "next/navigation";
 
 import { 
-	Autocomplete,
-	Box,
-	Button,
 	FilledInput,
 	FormControl,
 	Grid,
 	IconButton,
-	Input,
 	InputAdornment,
 	InputLabel,
 	Paper,
-	TextField,
 	Typography
 } from "@mui/material";
 
-import { useRouter } from "next/navigation";
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Image from 'next/image';
 
-import { default as LoginSVG } from '../../../public/login.svg';
+import { isEmptyOrUndefined } from  '@/app/lib/utils';
+import { User } from '@/app/lib/definitions';
 
 import ButtonComponent from '@/app/ui/ButtonComponent';
-import Link from 'next/link';
-
-import { isEmptyOrUndefined } from  '../lib/utils';
-import User from '../lib/definitions';
-
 
 interface LoginFormProps {
 }
@@ -73,6 +64,10 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 		});
 	}
 
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setUserData({...userData, [event.target.name]: event.target.value});
+	}
+
 	return (
 		<Grid container justifyContent={"center"} >
 			<Paper elevation={2} 
@@ -81,13 +76,14 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 					backgroundColor: "#3A3838", mt: 4 }}
 				>
 				<Grid container direction={"column"} justifyContent={'center'} 
-					alignItems={"center"} sx={{ p: 4, mt: 6 }}
+					alignItems={"center"} sx={{ p: 4, mt: 4 }}
 				>
 					<Grid item xs={12}>
 						<Image
 							priority
-							src={LoginSVG}
+							src={'/static/svgs/login.svg'}
 							width={250}
+							height={80}
 							alt="Create an account"
 						/>
 					</Grid>
@@ -95,18 +91,16 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 						<FormControl sx={styles.textBox}>
 							<InputLabel>Email</InputLabel>
 							<FilledInput
-								id="email"
+								name="Email"
 								type={'text'}
 								value={userData.Email}
-								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-									setUserData({...userData, Email: event.target.value});
-								}}
+								onChange={handleChange}
 								/>
 						</FormControl>
 						<FormControl sx={styles.textBox}>
 							<InputLabel>Password</InputLabel>
 							<FilledInput
-								id="pwd"
+								name="Password"
 								type={showPassword ? 'text' : 'password'}
 								endAdornment={
 									<InputAdornment position="end">
@@ -120,9 +114,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 									</InputAdornment>
 								}
 								value={userData.Password}
-								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-									setUserData({...userData, Password: event.target.value});
-								}}
+								onChange={handleChange}
 								/>
 						</FormControl>						
 					</Grid>

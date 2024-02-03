@@ -1,20 +1,27 @@
 "use client";
 
 import React from 'react';
-import { FilledInput, FormControl, Grid, IconButton, Input, InputAdornment, InputLabel, Paper, Typography } from '@mui/material';
-
 import axios from 'axios';
 
-import Image from 'next/image';
-import Link from 'next/link';
+import { 
+	FilledInput,
+	FormControl, 
+	Grid,
+	IconButton, 
+	InputAdornment,
+	InputLabel,
+	Paper
+} from '@mui/material';
 
-import CreateAccountSVG from '../../../../public/CreateAcc.svg';
+
+import Image from 'next/image';
+
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+
+import { isEmptyOrUndefined } from '@/app/lib/utils';
 import ButtonComponent from '@/app/ui/ButtonComponent';
 
-
-import { isEmptyOrUndefined } from '../../lib/utils';
-import User from '../../lib/definitions';
+import { User } from '@/app/lib/definitions';
 
 interface CreateAccountFormProps {
 }
@@ -50,6 +57,10 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 		createUser(userData, apiUrl);
 	}
 
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setUserData({...userData, [event.target.name]: event.target.value});
+	}
+
   return (
 	<Grid container justifyContent={"center"} >
 			<Paper elevation={2} 
@@ -63,8 +74,9 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 					<Grid item xs={12}>
 						<Image
 							priority
-							src={CreateAccountSVG}
+							src={'/static/svgs/CreateAcc.svg'}
 							width={250}
+							height={250}
 							alt="Create an account"
 						/>
 					</Grid>
@@ -72,31 +84,27 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 						<FormControl variant="standard" sx={styles.textBox}>
 							<InputLabel>Email</InputLabel>
 							<FilledInput
-								id="email"
+								name="Email"
 								type={'text'}
 								value={userData.Email}
-								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-									setUserData({...userData, Email: event.target.value});
-								}}
-								/>
+								onChange={handleChange}
+							/>
 						</FormControl>
 			
 						<FormControl variant="standard" sx={styles.textBox}>
 							<InputLabel>Name</InputLabel>
 							<FilledInput
-								id="name"
+								name="Name"
 								type={'text'}
 								value={userData.Name}
-								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-									setUserData({...userData, Name: event.target.value});
-								}}
+								onChange={handleChange}
 							/>
 						</FormControl>
 
-						<FormControl variant="standard" sx={styles.textBox}>
+						<FormControl variant="standard" sx={styles.textBox} >
 							<InputLabel>Password</InputLabel>
 							<FilledInput
-								id="pwd"
+								name="Password"
 								type={showPassword ? 'text' : 'password'}
 								endAdornment={
 									<InputAdornment position="end">
@@ -110,10 +118,8 @@ const CreateAccountForm: React.FC<CreateAccountFormProps> = () => {
 									</InputAdornment>
 								}
 								value={userData.Password}
-								onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-									setUserData({...userData, Password: event.target.value});
-								}}
-								/>
+								onChange={handleChange}
+							/>
 						</FormControl>						
 					</Grid>
 					<Grid item xs={12}>

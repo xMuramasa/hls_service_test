@@ -14,9 +14,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
-import ProfilePic from '../../../public/profile.png';
-
-import ButtonComponent from './ButtonComponent';
+import ButtonComponent from '@/app/ui/ButtonComponent';
 
 function ResponsiveAppBar() {
 
@@ -35,8 +33,9 @@ function ResponsiveAppBar() {
 					<Avatar sx={{ width: 56, height: 56 }}>
 						<Image
 							priority
-							src={ProfilePic}
-							width={90}
+							src={'/static/images/profile.png'}
+							width={80}
+							height={60}
 							alt="Home"
 							/>
 					</Avatar>
