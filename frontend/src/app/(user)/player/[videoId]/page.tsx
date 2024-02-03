@@ -2,26 +2,26 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import {
 	Button,
 	Grid,
+	IconButton,
 	Paper,
 } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import Hls from "hls.js";
 
-
-import { PlayerProps } from '@/app/lib/definitions';
 import { isEmptyOrUndefined } from "@/app/lib/utils";
 
-const  Player: React.FC<PlayerProps>= (props) => {
+const  Player = () => {
 
 	const [logged, setLogged]: any = React.useState(null);
 
 	const router = useRouter();
+	const params = useParams();
 
 	React.useEffect(() => {
 		const cookies = document.cookie;
@@ -35,14 +35,10 @@ const  Player: React.FC<PlayerProps>= (props) => {
 
 	const HlsSupported = Hls.isSupported();
 
-	const {
-		apiUrl = 'http://localhost:8080',
-		activeVideo = 'big_bunny',
-	} = props;
-	
+	const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 	React.useEffect(() => {
-		if (HlsSupported && !isEmptyOrUndefined(activeVideo, 'string') ) {
+		if (HlsSupported && !isEmptyOrUndefined(params?.videoId, 'string') ) {
 			var video: any = document.getElementById('video');
 			
 			console.log('logged', logged)
@@ -60,13 +56,13 @@ const  Player: React.FC<PlayerProps>= (props) => {
 			// bind them together
 			hls.attachMedia(video);
 			
-			hls.loadSource(`${apiUrl}/videos/${activeVideo}/segment.m3u8`);
+			hls.loadSource(`${apiUrl}/videos/${params.videoId}/segment.m3u8`);
 			// bind them together
 			hls.attachMedia(video)
 		} else {
 			console.log('HLS is not supported or video is not selected');
 		}
-	}, [activeVideo, logged]);
+	}, [params, logged]);
 
 	return (
 		<>
@@ -76,13 +72,13 @@ const  Player: React.FC<PlayerProps>= (props) => {
 		:
 			<Paper sx={{ backgroundColor: "#1E1E1E", height:'100vh', m:0, borderRadius: 0 }}>
 				<Button sx={{ backgroundColor: '#313131', height: '6vh', position:'absolute', m: 2, pl: 2, pt:1 }}>
-					<Link href="/myHls">
-						<Grid container justifyContent={"center"} alignItems={"center"}>
-							<Grid item xs>
+					<Grid container justifyContent={"center"} alignItems={"center"}>
+						<Grid item xs>
+							<IconButton onClick={() => router.back()}  >
 								<ArrowBackIosIcon fontSize='large' sx={{ color: '#ffff' }} />
-							</Grid>
+							</IconButton>
 						</Grid>
-					</Link>
+					</Grid>
 					</Button>
 				<video id="video" controls height={"90%"} width={"100%"} />
 			</Paper>

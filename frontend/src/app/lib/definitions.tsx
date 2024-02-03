@@ -15,20 +15,12 @@ export interface Video {
 }
 
 export interface VideoCard {
+    Id: string;
 	Name: string,
 	Description: string,
 	Thumbnail: string | any,
 	Video: string,
-}
-
-export interface MyPageProps {
-}
-
-export interface PlayerProps {
-	apiUrl: string,
-	HlsSupported: boolean,
-	loginJWT: string,
-	activeVideo: string,
+	activeFunc: changeState
 }
 
 export type voidFuncPromise = () => Promise<void>;

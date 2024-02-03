@@ -7,20 +7,27 @@ import Image from 'next/image';
 
 import { Grid, Paper } from '@mui/material';
 
-import { MyPageProps } from '@/app/lib/definitions';
 import VideoScroll from '@/app/ui/VideoScroll';
 
-const MyPage: React.FC<MyPageProps> = () => {
+import { fetchVideos } from './LoadVideos';
+
+const MyPage = () => {
+
+	const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
 	const [logged, setLogged]: any = React.useState(null);
 
 	const router = useRouter();
 
+	const [videos, setVideos]: any = React.useState([]);
+
 	React.useEffect(() => {
 		const cookies = document.cookie;
 		const token = cookies.split(';').find(cookie => cookie.includes('token'))?.split('=');
+		const jwt = token && token[1];
 		if (token && token[1] !== "") {
 			setLogged(true)
+			fetchVideos(jwt, apiUrl).then(res => setVideos(res));
 		} else {
 			setLogged(false)
 		}
@@ -44,12 +51,12 @@ const MyPage: React.FC<MyPageProps> = () => {
 							alt="MyHls"
 							/>
 					</Grid>
-
 					<Grid item xs={12} mt={6}>
 						<Paper elevation={2} sx={{ backgroundColor: "#343333", borderRadius: 4 }}>
-							<Suspense fallback={<></>}>
-								<VideoScroll />
-							</Suspense>
+							{
+								videos && videos.length > 0 &&
+								<VideoScroll videos={videos} />
+							}
 						</Paper>
 					</Grid>
 				</Grid>
