@@ -15,6 +15,9 @@ This is a [Go](https://go.dev/) project
 
 ## How to run
 
+- Postgresql database is required as described in the `docker-compose.yml` file
+  - `docker compose up postgres`
+
 - Change the connection string in `./backend/db/db.go` file to the correct database connection string depending on your setup
 
 ```go

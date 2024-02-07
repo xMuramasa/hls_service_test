@@ -21,6 +21,7 @@ The next.js app to handle the user interactions, such as:
 - docker to run the containers
 
 - Or if you want to run locally
+  - docker (for the postgres database)
   - golang
   - node.js
   - yarn
@@ -41,5 +42,6 @@ psqlInfo := fmt.Sprintf("port=%d user=%s password=%s dbname=%s sslmode=disable",
 
 ### How to run locally without docker
 
+- Run the database with `docker compose up postgres` (needs docker installed)
 - On one terminal, run `cd ./backend` and run `go run .` for the golang server
 - On another terminal, run `cd ./frontend` and run `yarn dev` for the next.js app
