@@ -20,7 +20,7 @@ func RegisterRoutes(server *gin.Engine) {
 	authenticated.PUT("/users/:id", updateUser)
 
 	authenticated.GET("/videos", getVideoList)
-	server.StaticFS("/video/play", http.Dir("./static/videos"))
+	authenticated.StaticFS("/video/play", http.Dir("./static/videos"))
 	authenticated.GET("/video/:name", getStream)
 
 }

@@ -14,11 +14,13 @@ func main() {
 	server := gin.Default()
 
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"*"}
+
+	config.AllowAllOrigins = true
 	config.AllowCredentials = true
-	config.ExposeHeaders = []string{"Authorization", "Accept-Encoding"}
+
+	config.ExposeHeaders = []string{"Authorization", "Accept-Encoding", "Content-Type"}
+
 	config.AddAllowHeaders("Authorization")
-	config.AddAllowHeaders("Accept-Encoding")
 
 	server.Use(cors.New(config))
 

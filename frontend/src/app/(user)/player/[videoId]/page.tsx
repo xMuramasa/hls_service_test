@@ -63,14 +63,9 @@ const  Player = () => {
 				liveDurationInfinity: true,
 				maxBufferLength: 60,
 
-				fetchSetup: function (context, initParams) {
-					// Always send cookies, even for cross-origin calls.
-					initParams.credentials = 'include';
-					initParams.headers ={
-					Authorization: logged,
-					}
-					return new Request(context.url, initParams);
-				},
+				xhrSetup: function (xhr) {
+					xhr.setRequestHeader('authorization', logged);
+				}
 			})
 			
 			hls.loadSource(`${apiUrl}/video/play/${params.videoId}/video_${params.videoId}.m3u8`);
