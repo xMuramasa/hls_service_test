@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { useParams, useRouter } from "next/navigation";
 
 import {
+	Box,
 	Button,
+	CircularProgress,
 	Grid,
 	IconButton,
 	Paper,
@@ -15,10 +17,13 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Hls from "hls.js";
 
 import { isEmptyOrUndefined } from "@/app/lib/utils";
+import { getVideoStream } from './GetVideo';
 
 const  Player = () => {
 
 	const [logged, setLogged]: any = React.useState(null);
+
+	const [videoOk, setVideoOk] = React.useState(false);
 
 	const router = useRouter();
 	const params = useParams();
@@ -27,7 +32,7 @@ const  Player = () => {
 		const cookies = document.cookie;
 		const token = cookies.split(';').find(cookie => cookie.includes('token'))?.split('=');
 		if (token && token[1] !== "") {
-			setLogged(true)
+			setLogged(token[1])
 		} else {
 			setLogged(false)
 		}
@@ -35,13 +40,29 @@ const  Player = () => {
 
 	const HlsSupported = Hls.isSupported();
 
-	const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+	const apiUrl = 'http://localhost:8080';
 
 	React.useEffect(() => {
-		if (HlsSupported && !isEmptyOrUndefined(params?.videoId, 'string') ) {
-			var video: any = document.getElementById('video');
+		if (HlsSupported 
+			&& !isEmptyOrUndefined(params?.videoId, 'string')
+			&& !isEmptyOrUndefined(logged, 'string')) {
+			
+			getVideoStream(apiUrl, params.videoId, logged).then(res => setVideoOk(res));
+						
+		}
+	}, [params, logged]);
 
+	React.useEffect(()=>{
+		if (videoOk
+			&& !isEmptyOrUndefined(params?.videoId, 'string')
+			&& !isEmptyOrUndefined(logged, 'string')) {
+
+			var video: any = document.getElementById('video');
 			const hls = new Hls({
+				autoStartLoad: true,
+				liveDurationInfinity: true,
+				maxBufferLength: 60,
+
 				fetchSetup: function (context, initParams) {
 					// Always send cookies, even for cross-origin calls.
 					initParams.credentials = 'include';
@@ -51,20 +72,28 @@ const  Player = () => {
 					return new Request(context.url, initParams);
 				},
 			})
-			// bind them together
-			hls.attachMedia(video);
 			
-			hls.loadSource(`${apiUrl}/videos/${params.videoId}/segment.m3u8`);
+			hls.loadSource(`${apiUrl}/video/play/${params.videoId}/video_${params.videoId}.m3u8`);
+
 			// bind them together
 			hls.attachMedia(video)
-		} else {
-			console.log('HLS is not supported or video is not selected');
-		}
-	}, [params, logged]);
+
+			hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+				video.play();
+			})
+			}
+	}, [videoOk])
 
 	return (
 		<>
-		{ logged === null ? <></>
+		{ logged === null || !videoOk ? 
+			<>
+			<Paper sx={{ height:'100vh', m:0 }}>
+				<Box sx={{ display: 'flex' }}>
+					<CircularProgress />
+				</Box>
+			</Paper>
+			</>
 		: !logged ? 
 			router.push("/")
 		:
